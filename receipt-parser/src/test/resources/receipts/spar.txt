@@ -1,0 +1,24 @@
+SPAR MAGYARORSZÁG KERESKEDELMI KFT.
+2000 PÉLDAVÁROS, MINTA U. 2.
+SPAR SZUPERMARKET 1234
+1111 PÉLDAVÁROS, TESZT UTCA 6.
+ADÓSZÁM: 12345678-2-42
+NYUGTA
+TEJ ESL 2,8% 1L            C00      329
+TRAP SAJT KG               C00    1.794
+0,600 kg x 2.990 Ft/kg
+BANAN LOOSE                C00      422
+0,846 kg x 499 Ft/kg
+COCA COLA 1,5L             C00      649
+VISSZAVÁLTÁSI DÍJ          E00       50
+KIFLI VAJAS 60G            C00       45
+5 x 45                              225
+SPAR PLUSZ KEDVEZMÉNY             -100
+------------------------------------------
+ÖSSZESEN:                        3.369
+BANKKÁRTYA:                      3.369
+ÁFA C00 27,00%                     716
+2024.03.15 14:32
+NYUGTASZÁM: 0123/00456
+AP A12345678
+KÖSZÖNJÜK A VÁSÁRLÁST!

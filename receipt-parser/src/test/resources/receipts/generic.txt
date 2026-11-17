@@ -1,0 +1,13 @@
+Minta Élelmiszer Kft.
+Sarki ABC
+1234 Kisfalu, Kossuth u. 5.
+Adószám: 55555555-1-11
+Kenyér fehér 1kg       649
+Tej 2,8% 1l            329
+Tejföl 20% 450g        549
+Alma                   378
+0,945 kg x 400 Ft/kg
+Ismeretlen áru         250
+Összesen:            2 155
+Készpénz             2 155
+2024.02.29 07:58

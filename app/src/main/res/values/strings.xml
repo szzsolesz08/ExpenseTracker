@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KiadásKövető</string>
+    <string name="channel_budget_name">Költségkeret figyelmeztetések</string>
+    <string name="channel_budget_desc">Értesítés, ha egy havi vagy heti keret elér egy beállított szintet.</string>
+    <string name="channel_backup_name">Biztonsági mentés</string>
+    <string name="channel_backup_desc">Az automatikus helyi mentés eredménye.</string>
+</resources>

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T13:40:00Z",
+  "title": "Design System: KiadásKövető",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Forint Green", "canonical": "#0E6B50", "tonalRamp": ["#CDEFDF", "#7FD8B4", "#0E7A5A", "#0E6B50", "#00513C", "#00382A"] },
+      "review-amber": { "role": "tertiary", "displayName": "Review Amber", "canonical": "#855400", "tonalRamp": ["#FFDDB4", "#F6BC6A", "#855400", "#653E00", "#2A1800"] },
+      "ground": { "role": "neutral", "displayName": "Thermal Paper Ground", "canonical": "#F6F7F5", "tonalRamp": ["#FFFFFF", "#F6F7F5", "#EAEEEB", "#DEE4DF", "#C0C9C3", "#707973", "#404944", "#171D1A"] },
+      "dark-ground": { "role": "neutral", "displayName": "Night Ledger Ground", "canonical": "#0F1412", "tonalRamp": ["#0A0F0D", "#0F1412", "#171D1A", "#1B211E", "#252B28", "#303633"] }
+    },
+    "typographyMeta": {
+      "hero": { "displayName": "Hero figure", "purpose": "The single month total on the dashboard; proportional figures." },
+      "body": { "displayName": "Body", "purpose": "Item names and descriptions; tabular figures in aligned amount columns." }
+    },
+    "shadows": [
+      { "name": "card", "value": "Material elevation 1dp (2dp pressed)", "purpose": "AppCard on the tinted ground." },
+      { "name": "bottom-bar", "value": "3dp tonal + 6dp shadow", "purpose": "Sticky save bar on the review screen." },
+      { "name": "slip", "value": "2dp shadow following the perforated outline", "purpose": "Receipt slip signature." }
+    ],
+    "motion": [
+      { "name": "hero-count-up", "value": "650-700ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Month total counts up once on load." },
+      { "name": "bar-growth", "value": "650ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Chart bars grow from the baseline on first appearance." },
+      { "name": "nav-shared-axis", "value": "fade 220ms + 1/12-width slide 260ms", "purpose": "Screen transitions." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "< 600dp: navigation bar + FAB" },
+      { "name": "medium", "value": ">= 600dp: navigation rail with FAB in header" }
+    ]
+  },
+  "components": [
+    { "name": "Primary Button", "kind": "button", "refersTo": "button-primary", "description": "The one main action of a screen (Mentés, Feldolgozás).",
+      "html": "<button class=\"ds-btn-primary\">Mentés</button>",
+      "css": ".ds-btn-primary{background:#0E6B50;color:#fff;border:none;border-radius:999px;height:52px;padding:0 28px;font:600 15px Roboto,sans-serif;transition:filter .2s}.ds-btn-primary:hover{filter:brightness(1.08)}.ds-btn-primary:focus-visible{outline:3px solid #7FD8B4;outline-offset:2px}" },
+    { "name": "Add Receipt FAB", "kind": "button", "refersTo": "fab-add-receipt", "description": "Extended FAB, bottom-right, opens the capture sheet.",
+      "html": "<button class=\"ds-fab\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M11 5h2v14h-2zM5 11h14v2H5z\" fill=\"currentColor\"/></svg>Blokk hozzáadása</button>",
+      "css": ".ds-fab{display:inline-flex;gap:12px;align-items:center;background:#CDEFDF;color:#00382A;border:none;border-radius:20px;height:56px;padding:0 20px;font:600 15px Roboto,sans-serif;box-shadow:0 3px 6px rgba(0,0,0,.18)}.ds-fab:hover{box-shadow:0 5px 10px rgba(0,0,0,.2)}.ds-fab:focus-visible{outline:3px solid #0E6B50;outline-offset:2px}" },
+    { "name": "Card", "kind": "card", "refersTo": "card", "description": "White paper card on the tinted ground.",
+      "html": "<div class=\"ds-card\">Kategóriák</div>",
+      "css": ".ds-card{background:#fff;border-radius:20px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.12);font:400 16px Roboto,sans-serif;color:#171D1A}" },
+    { "name": "Review Marker", "kind": "chip", "refersTo": "review-marker", "description": "Amber 'check this' marker: icon + words.",
+      "html": "<span class=\"ds-review\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\"><path d=\"M12 2 1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2V9h2v4z\" fill=\"currentColor\"/></svg>Ellenőrizd</span>",
+      "css": ".ds-review{display:inline-flex;gap:4px;align-items:center;background:#FFDDB4;color:#2A1800;border-radius:999px;padding:3px 8px;font:500 12px Roboto,sans-serif}" },
+    { "name": "Navigation Bar", "kind": "nav", "description": "Five destinations; selected item has a tonal pill and filled icon.",
+      "html": "<nav class=\"ds-nav\"><span class=\"on\">Áttekintés</span><span>Blokkok</span><span>Statisztika</span><span>Termékek</span><span>Beállítások</span></nav>",
+      "css": ".ds-nav{display:flex;justify-content:space-around;background:#E4E9E5;padding:12px 0;font:500 12px Roboto,sans-serif;color:#404944}.ds-nav .on{color:#171D1A;background:#D9E8E0;border-radius:16px;padding:4px 12px}" },
+    { "name": "Receipt Slip", "kind": "custom", "refersTo": "receipt-slip", "description": "Signature: receipt detail as a paper slip with perforated edge.",
+      "html": "<div class=\"ds-slip\"><b>Lidl</b><div class=\"row\"><span>Paprika piros</span><span>561 Ft</span></div><div class=\"row tot\"><span>ÖSSZESEN</span><span>2 584 Ft</span></div></div>",
+      "css": ".ds-slip{background:#fff;padding:20px 20px 28px;font:400 14px Roboto,sans-serif;color:#151A17;box-shadow:0 2px 4px rgba(0,0,0,.14);clip-path:polygon(0 0,100% 0,100% calc(100% - 9px),95% 100%,90% calc(100% - 9px),85% 100%,80% calc(100% - 9px),75% 100%,70% calc(100% - 9px),65% 100%,60% calc(100% - 9px),55% 100%,50% calc(100% - 9px),45% 100%,40% calc(100% - 9px),35% 100%,30% calc(100% - 9px),25% 100%,20% calc(100% - 9px),15% 100%,10% calc(100% - 9px),5% 100%,0 calc(100% - 9px))}.ds-slip .row{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;padding:4px 0}.ds-slip .tot{border-top:1px dashed #A9B3AD;margin-top:8px;padding-top:8px;font-weight:600;font-size:18px}" }
+  ],
+  "narrative": {
+    "northStar": "The receipt is the unit of truth",
+    "overview": "Thermal-paper whites and ink-dark numerals on a faintly green-grey ground, one forint-green accent, amber reserved for review. Precision over decoration; the receipt slip with a perforated tear edge is the signature object.",
+    "keyCharacteristics": ["One accent", "Exact Hungarian money formatting", "Status = colour + icon + words", "Ranked bars instead of donuts", "One-handed bottom actions"],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Only forint green carries emphasis; categories are identified by icon + name.", "section": "colors" },
+      { "name": "Tabular Columns", "body": "Aligned amounts use tabular figures; the hero figure stays proportional.", "section": "typography" }
+    ],
+    "dos": ["Show uncertainty with amber markers and reconciliation lines", "Keep every amount exact and traceable to a receipt line"],
+    "donts": ["Don't colour-code 17 categories", "Don't use eyebrow labels or gradient text", "Don't fill missing receipt data silently"]
+  }
+}

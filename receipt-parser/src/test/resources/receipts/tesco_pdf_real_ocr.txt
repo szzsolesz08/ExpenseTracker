@@ -1,0 +1,16 @@
+TESCO-GLOBÁL Áruházak Zrt.
+TESCO Hipermarket Példaváros
+1111 Példaváros, Teszt körút 1.
+Adószám: 44444444-2-44
+NYUGTA
+TESCO FINEST SONKA 1006 C 899
+CLUBCARD KEDVEZMENY          -200
+MILKA TEJCSOKI 1006       C 4599
+WC PAPIR 3 RETEGU 8 TEK C 1 799
+OBLITO 2.                 C 1.299
+PEDIGREE KUTYAELEDEL 1KG C 1 049
+HEINEKEN DOB 0,5L         C    399
+2 Xx 399                        798
+ÖSSZESEN                     6.103
+BANKKÁRTYA                   6.103
+2024-06-01 10:45:00

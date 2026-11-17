@@ -84,6 +84,11 @@ Alternatively sign the unsigned APK manually with `apksigner sign --ks kiadaskov
 there): unit tests, then the R8 release build. The APK and its `SHA256SUMS.txt` are attached to the workflow run as an
 artifact named `KiadasKoveto-<version>-<commit>` (Actions tab → the run → Artifacts; kept for 30 days).
 
+**GitHub releases:** when the tag `v<versionName>` (from `app/build.gradle.kts`) does not exist yet, the same run
+publishes a GitHub release with that tag on the pushed commit, with the APK and `SHA256SUMS.txt` attached. To publish a
+new release, bump `versionName` (and `versionCode`) and push to `main`; pushes without a bump only produce the run
+artifact.
+
 Builds are cached: the Gradle User Home and Gradle build cache (unchanged tasks are restored instead of re-run), the
 Android SDK platform/build-tools and Robolectric's Android jars. Optional repository secrets
 (Settings → Secrets and variables → Actions):

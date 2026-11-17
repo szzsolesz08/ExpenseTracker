@@ -8,6 +8,10 @@
 #
 # Signing: if the ANDROID_KEYSTORE_* secrets are set (see README, "Continuous integration"), the APK is
 # signed with your release key; otherwise an unsigned release APK is produced. No key is ever generated here.
+#
+# GitHub release: when the tag v<versionName> (from app/build.gradle.kts) does not exist yet, the run creates
+# that release on the pushed commit with the APK and its checksum attached. Bump versionName for a new release;
+# pushes without a bump only attach the APK to the workflow run.
 
 name: Release APK
 
@@ -31,6 +35,8 @@ jobs:
     name: Build release APK
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: write # create the GitHub release and its tag
 
     steps:
       - name: Check out
@@ -99,12 +105,18 @@ jobs:
           BASE="KiadasKoveto-$VERSION-${GITHUB_SHA::7}"
           mkdir -p dist
           if [ -f app/build/outputs/apk/release/app-release.apk ]; then
-            cp app/build/outputs/apk/release/app-release.apk "dist/$BASE-release.apk"
+            cp app/build/outputs/apk/release/app-release.apk "dist/KiadasKoveto-$VERSION-release.apk"
+            SIGNED=true
           else
-            cp app/build/outputs/apk/release/app-release-unsigned.apk "dist/$BASE-release-unsigned.apk"
+            cp app/build/outputs/apk/release/app-release-unsigned.apk "dist/KiadasKoveto-$VERSION-release-unsigned.apk"
+            SIGNED=false
           fi
-          (cd dist && sha256sum ./*.apk > SHA256SUMS.txt)
-          echo "artifact=$BASE" >> "$GITHUB_OUTPUT"
+          (cd dist && sha256sum ./*.apk | sed 's| \./| |' > SHA256SUMS.txt)
+          {
+            echo "artifact=$BASE"
+            echo "version=$VERSION"
+            echo "signed=$SIGNED"
+          } >> "$GITHUB_OUTPUT"
           {
             echo "### Release APK"
             echo '```'
@@ -121,6 +133,40 @@ jobs:
           retention-days: 30
           # APKs are already compressed.
           compression-level: 0
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ steps.collect.outputs.version }}
+          SIGNED: ${{ steps.collect.outputs.signed }}
+        run: |
+          TAG="v$VERSION"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "::notice title=No new release::Release $TAG already exists. Bump versionName in app/build.gradle.kts to publish a new one; this build is attached to the workflow run."
+            exit 0
+          fi
+          NOTES="$RUNNER_TEMP/notes.md"
+          {
+            echo "Offline Hungarian receipt and expense tracker for Android 10+ (KiadásKövető $VERSION)."
+            echo "Built from ${GITHUB_SHA::7} by [this workflow run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
+            echo
+            if [ "$SIGNED" = "true" ]; then
+              echo "**Install:** allow \"Install unknown apps\" for your file manager, then open the APK on the phone."
+            else
+              echo "**This APK is unsigned.** Android only installs signed APKs: sign it with your release key first"
+              echo "(\`apksigner sign --ks kiadaskoveto-release.jks <apk>\`), or add the signing secrets described in the"
+              echo "README so the workflow signs future releases."
+            fi
+            echo
+            echo "SHA-256:"
+            echo '```'
+            cat dist/SHA256SUMS.txt
+            echo '```'
+          } > "$NOTES"
+          gh release create "$TAG" dist/*.apk dist/SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "KiadásKövető $VERSION" --notes-file "$NOTES"
+          echo "Published release $TAG" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload test reports
         if: failure()

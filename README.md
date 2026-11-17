@@ -87,7 +87,7 @@ artifact named `KiadasKoveto-<version>-<commit>` (Actions tab → the run → Ar
 **GitHub releases:** when the tag `v<versionName>` (from `app/build.gradle.kts`) does not exist yet, the same run
 publishes a GitHub release with that tag on the pushed commit, with the APK and `SHA256SUMS.txt` attached. To publish a
 new release, bump `versionName` (and `versionCode`) and push to `main`; pushes without a bump only produce the run
-artifact.
+artifact. Unsigned builds (no signing secrets) are never published as a release, since Android cannot install them.
 
 Builds are cached: the Gradle User Home and Gradle build cache (unchanged tasks are restored instead of re-run), the
 Android SDK platform/build-tools and Robolectric's Android jars. Optional repository secrets

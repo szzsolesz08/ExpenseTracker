@@ -11,7 +11,8 @@
 #
 # GitHub release: when the tag v<versionName> (from app/build.gradle.kts) does not exist yet, the run creates
 # that release on the pushed commit with the APK and its checksum attached. Bump versionName for a new release;
-# pushes without a bump only attach the APK to the workflow run.
+# pushes without a bump only attach the APK to the workflow run. Unsigned APKs are never published as a release,
+# because Android refuses to install them.
 
 name: Release APK
 
@@ -142,6 +143,10 @@ jobs:
           SIGNED: ${{ steps.collect.outputs.signed }}
         run: |
           TAG="v$VERSION"
+          if [ "$SIGNED" != "true" ]; then
+            echo "::warning title=No release published::The APK is unsigned and Android cannot install it, so no GitHub release is created. Set the ANDROID_KEYSTORE_* secrets (see README)."
+            exit 0
+          fi
           if gh release view "$TAG" > /dev/null 2>&1; then
             echo "::notice title=No new release::Release $TAG already exists. Bump versionName in app/build.gradle.kts to publish a new one; this build is attached to the workflow run."
             exit 0
@@ -151,13 +156,7 @@ jobs:
             echo "Offline Hungarian receipt and expense tracker for Android 10+ (KiadásKövető $VERSION)."
             echo "Built from ${GITHUB_SHA::7} by [this workflow run]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."
             echo
-            if [ "$SIGNED" = "true" ]; then
-              echo "**Install:** allow \"Install unknown apps\" for your file manager, then open the APK on the phone."
-            else
-              echo "**This APK is unsigned.** Android only installs signed APKs: sign it with your release key first"
-              echo "(\`apksigner sign --ks kiadaskoveto-release.jks <apk>\`), or add the signing secrets described in the"
-              echo "README so the workflow signs future releases."
-            fi
+            echo "**Install:** allow \"Install unknown apps\" for your file manager, then open the APK on the phone."
             echo
             echo "SHA-256:"
             echo '```'
